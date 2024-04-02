@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normalized Data Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .pagination button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Normalized Data Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>DENCEABILITY</th>
+                <th>ENERGY</th>
+                <th>KEY</th>
+                <th>LOUDNESS</th>
+                <th>MODE</th>
+                <th>ACOUSTICNESS</th>
+                <th>INSTRUMENTALNESS</th>
+                <th>LIVENESS</th>
+                <th>VALENCE</th>
+                <th>TEMPO</th>
+                <th>DURATION_MS</th>
+                <th>TIME_SIGNATURE</th>
+                <th>NUM_BARS</th>
+                <th>NUM_SECTIONS</th>
+                <th>NUM_SEGMENTS</th>
+                <th>CLASS</th>
+                <th>Rating</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.danceability }}</td>
+                <td>{{ item.energy }}</td>
+                <td>{{ item.key }}</td>
+                <td>{{ item.loudness }}</td>
+                <td>{{ item.mode }}</td>
+                <td>{{ item.acousticness }}</td>
+                <td>{{ item.instrumentalness }}</td>
+                <td>{{ item.liveness }}</td>
+                <td>{{ item.valence }}</td>
+                <td>{{ item.tempo }}</td>
+                <td>{{ item.duration_ms }}</td>
+                <td>{{ item.time_signature }}</td>
+                <td>{{ item.num_bars }}</td>
+                <td>{{ item.num_sections }}</td>
+                <td>{{ item.num_segments }}</td>
+                <td>{{ item.class }}</td>
+                <td>{{ item.rating }}</td>
+                <td>
+                    <form action="{{ url_for('rate_song') }}" method="POST">
+                        <input type="hidden" name="id" value="{{ item.id }}">
+                        <select name="rating">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="submit">Rate</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        {% if page > 1 %}
+        <button onclick="prevPage()">Previous</button>
+        {% endif %}
+        <span>Page {{ page }} of {{ total_pages }}</span>
+        {% if page < total_pages %}
+        <button onclick="nextPage()">Next</button>
+        {% endif %}
+    </div>
+
+    <script>
+        function nextPage() {
+            window.location.href = "{{ url_for('get_all_data', page=page + 1) }}";
+        }
+
+        function prevPage() {
+            window.location.href = "{{ url_for('get_all_data', page=page - 1) }}";
+        }
+    </script>
+</body>
+</html>
