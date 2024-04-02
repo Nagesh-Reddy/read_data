@@ -1,4 +1,7 @@
-# This is an Flask backend app for reading, flattening and editing static json data and display using HTML and CSS
+# Read Normalized Data
+
+This is an Flask backend app for reading, flattening and editing static json data and display using HTML and CSS
+
 To run the application follow below steps
 1) Install Python
 2) Create a virtual env - Python -m venv <virtual_Name>
